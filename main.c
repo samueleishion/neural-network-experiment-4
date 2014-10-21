@@ -22,14 +22,19 @@ int main(int argc, char **argv) {
 	if(n!=NULL) printf("Network created successfully! (%d organs)\n", n->organ_count);
 	else printf("Error creating network.\n"); 
 
-	organ *o = organ_create(); 
-	if(o!=NULL) printf("Organ created successfully\n"); 
-	else printf("Error creating organ.\n"); 
+	organ *o = organ_create("right hand"); 
+	organ *p = organ_create("left hand"); 
+
+	neuron *k = neuron_create(1,1,0.5); 
+
+	organ_add_neuron(o,k); 
+	organ_add_neuron(o,k); 
+	organ_add_neuron(p,k); 
 
 	network_add_organ(n, o); 
+	network_add_organ(n, p); 
 
-	if(n->organ_count==1) printf("Successfully added organ! (%d organs)\n", n->organ_count); 
-	else printf("Error adding organ.\n"); 
+	organ_connect(o, p); 
 
 	return 0; 
 }

@@ -57,8 +57,9 @@ struct organ {
 	string name; 
 }; 
 
-organ *organ_create() {
+organ *organ_create(string name) {
 	organ *o = TYPED_MALLOC(organ); 
+	o->name = name; 
 	return o; 
 } 
 
@@ -66,6 +67,26 @@ void organ_add_neuron(organ *o, neuron *n) {
 	o->neurons[o->neuron_count++] = n; 
 }
 
+void organ_connect(organ *o, organ *p) {
+	int *current_o = *o->neurons; 
+	int *current_p = *p->neurons; 
+
+	int count_o = 0; 
+	int count_p = 0; 
+
+	while(current_o!=NULL) {
+		current_o++; 
+		count_o++; 
+	}
+
+	while(current_p!=NULL) {
+		current_p++; 
+		count_p++; 
+	}
+
+	printf("count of o: %d\n", count_o); 
+	printf("count of p: %d\n", count_p); 
+}
 
 // ==================
 // 		NETWORK   

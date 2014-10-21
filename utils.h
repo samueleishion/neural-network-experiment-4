@@ -7,3 +7,4 @@ typedef char *string;
 #define CAST(t,e) ((t)(e)) 
 #define TYPED_MALLOC(t) CAST(t*,malloc(sizeof(t))) 
 
+#define NULL ((char *)0)
