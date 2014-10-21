@@ -1,5 +1,6 @@
 #include <stdlib.h> 
 #include <string.h> 
+
 #define HASHSIZE 101
 
 static struct map_entry *hashtab[HASHSIZE]; 
