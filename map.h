@@ -1,3 +1,4 @@
+// http://stackoverflow.com/questions/4384359/quick-way-to-implement-dictionary-in-c
 #include <stdlib.h> 
 #include <string.h> 
 

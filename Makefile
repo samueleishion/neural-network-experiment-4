@@ -1,5 +1,5 @@
-neunet: main.c utils.h bio.h map.h
-	gcc -Wall -w main.c utils.h bio.h map.h -o main 
+neunet: main.c utils.h bio.h map.h arraylist.h 
+	gcc -Wall -w main.c utils.h bio.h map.h arraylist.h -o main 
 	@./main 
 
 clean: 
