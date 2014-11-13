@@ -36,7 +36,11 @@ int main() {
 	p.add_neuron(d); 
 	p.add_neuron(f); 
 
+	o.connect(p); 
+
 	cout << "hello brain with " << n.organ_count() << " organs!" << endl; 
 	cout << "  " << o.name << " has " << o.neuron_count() << " neurons." << endl; 
 	cout << "  " << p.name << " has " << p.neuron_count() << " neurons." << endl; 
+
+	o.show_connections(); 
 }

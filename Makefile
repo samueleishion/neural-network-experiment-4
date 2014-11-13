@@ -1,5 +1,5 @@
-neunet: bio.h bio.cpp main.cpp utils.h
-	g++ main.cpp bio.h bio.cpp utils.h -o main
+neunet: bio.h bio.cpp main.cpp utils.h utils.cpp
+	g++ main.cpp bio.cpp utils.cpp -o main
 	@./main 
 
 clean: 

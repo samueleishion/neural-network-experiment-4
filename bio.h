@@ -42,6 +42,7 @@ class Neuron {
 			: type(ntype), id(nid), weight(nweight) { } 
 
 		void connect(Neuron n); 
+		void show_connections(); 
 }; 
 
 
@@ -60,6 +61,7 @@ class Organ {
 		void add_neuron(Neuron n); 
 		int neuron_count(); 
 		void connect(Organ p); 
+		void show_connections(); 
 }; 
 
 
