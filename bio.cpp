@@ -33,6 +33,5 @@ int Network::organ_count() {
 }
 
 void Network::add_organ(Organ o) {
-	// @TODO 
-	return; 
+	organs.push_back(o); 
 }

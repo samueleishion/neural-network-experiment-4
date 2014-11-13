@@ -13,14 +13,30 @@ using namespace std;
 
 int main() {
 
-	Network n; 
+	Network n(1); 
 
-	Organ o; 
-	Organ p; 
+	Organ o(1, "right_hand"); 
+	Organ p(2, "left_hand"); 
 
-	Neuron k;
-	Neuron l;  
-	Neuron m; 
+	Neuron a(SENSORY, 1, 0.25);
+	Neuron b(SENSORY, 2, 0.45);  
+	Neuron c(SENSORY, 3, 0.65); 
+	Neuron d(SENSORY, 4, 0.75); 
+	Neuron e(TERMINAL, 5, 0); 
+	Neuron f(TERMINAL, 6, 0); 
 
-	cout << "hello brain with 1 neuron (" << k.id << ")" << endl; 
+	n.add_organ(o); 
+	n.add_organ(p); 
+
+	o.add_neuron(a); 
+	o.add_neuron(b); 
+	o.add_neuron(e); 
+
+	p.add_neuron(c); 
+	p.add_neuron(d); 
+	p.add_neuron(f); 
+
+	cout << "hello brain with " << n.organ_count() << " organs!" << endl; 
+	cout << "  " << o.name << " has " << o.neuron_count() << " neurons." << endl; 
+	cout << "  " << p.name << " has " << p.neuron_count() << " neurons." << endl; 
 }
