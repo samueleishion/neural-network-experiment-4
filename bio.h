@@ -8,6 +8,7 @@
 #include <iostream> 
 #include <string> 
 #include <vector> 
+#include <map>
 
 using namespace std; 
 
@@ -24,7 +25,21 @@ using namespace std;
 #define TERMINAL 2
 #define MOTOR 3 
 
+
 // bio classes 
+class Cognit {
+	public: 
+		string source; 
+		map<string, int> destinations; 
+
+		Cognit(string name)
+			: source(name) { } 
+
+		void add_destination(string s, int i); 
+		void increment_destination(string s); 
+}; 
+
+
 class Neuron {
 	public: 
 		int type; 
@@ -35,6 +50,7 @@ class Neuron {
 		float subtotal; 
 		int body; 
 		vector<Neuron> axon; 
+		map<string, Cognit> cognits; 
 
 		Neuron() 
 			: type(0), id(0), weight(0) { } 
@@ -44,6 +60,7 @@ class Neuron {
 
 		void connect(Neuron n); 
 		void show_connections(); 
+		void add_cognit(string in, string out, int value); 
 }; 
 
 
@@ -81,5 +98,8 @@ class Network {
 		void add_organ(Organ o); 
 }; 
 
+
+typedef pair<string, int> inpair; 
+typedef pair<string, Cognit> outpair; 
 
 #endif

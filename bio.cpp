@@ -11,6 +11,18 @@
 #include "utils.h" 
 #include "bio.h"
 
+// ==============
+// Cognit methods 
+// ==============
+void Cognit::add_destination(string s, int i) {
+	if(!destinations.count(s)) 
+		destinations.insert(inpair(s,i)); 
+}
+
+void Cognit::increment_destination(string s) {
+	if(destinations.count(s))
+		destinations[s]++; 
+}
 
 // ==============
 // Neuron methods 
@@ -25,6 +37,14 @@ void Neuron::show_connections() {
 		cout << axon[i].id << ", "; 
 	}
 	cout << endl; 
+}
+
+void Neuron::add_cognit(string in, string out, int value) {
+	if(!cognits.count(in)) {
+		Cognit c(in); 
+		c.add_destination(out, value); 
+		cognits.insert(outpair(in, c)); 
+	}
 }
 
 // =============
