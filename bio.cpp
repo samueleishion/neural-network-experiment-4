@@ -7,6 +7,7 @@
 
 #include <iostream> 
 #include <string> 
+#include <sstream>
 #include <cstdlib> 
 #include "utils.h" 
 #include "bio.h"
@@ -44,7 +45,35 @@ void Neuron::add_cognit(string in, string out, int value) {
 		Cognit c(in); 
 		c.add_destination(out, value); 
 		cognits.insert(outpair(in, c)); 
+	} 
+}
+
+void Neuron::process(string cognit_trail, float input) { 
+	float output = 0.0; 
+
+	if(input>0) {
+		subtotal += input*weight; 
+
+		while(subtotal>threshold) {
+			output = ((random()%3)+6)%10; // [0.6,0.8] 
+			subtotal -= threshold; 
+			send(cognit_trail, output); 
+		}
 	}
+}
+
+void Neuron::send(string cognit_trail, float output) {
+	stringstream ss; 
+	ss << id; 
+	string cognit_step = ss.str(); 
+	if(cognits.count(cognit_trail)) {
+		// insert trail in cognits 
+
+	} 
+
+	// pick pseudo random 
+
+	add_cognit(cognit_trail, cognit_step, 1); 
 }
 
 // =============
