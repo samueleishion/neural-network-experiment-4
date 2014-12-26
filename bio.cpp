@@ -12,6 +12,8 @@
 #include "utils.h" 
 #include "bio.h"
 
+typedef std::_Rb_tree_iterator<std::pair<const std::basic_string<char, std::char_traits<char>, std::allocator<char> >, Cognit> > entry; 
+
 // ==============
 // Cognit methods 
 // ==============
@@ -45,6 +47,9 @@ void Neuron::add_cognit(string in, string out, int value) {
 		Cognit c(in); 
 		c.add_destination(out, value); 
 		cognits.insert(outpair(in, c)); 
+	} else {
+		entry search = cognits.find(in); 
+		((Cognit) search->second).increment_destination(out); 
 	} 
 }
 
@@ -55,7 +60,7 @@ void Neuron::process(string cognit_trail, float input) {
 		subtotal += input*weight; 
 
 		while(subtotal>threshold) {
-			output = ((random()%3)+6)%10; // [0.6,0.8] 
+			output = ((random()%3)+6)/10; // [0.6,0.8] 
 			subtotal -= threshold; 
 			send(cognit_trail, output); 
 		}
