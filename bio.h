@@ -37,6 +37,7 @@ class Cognit {
 
 		void add_destination(string s, int i); 
 		void increment_destination(string s); 
+		string get_most_likely(); 
 }; 
 
 

@@ -14,6 +14,7 @@
 
 typedef std::_Rb_tree_iterator<std::pair<const std::basic_string<char, std::char_traits<char>, std::allocator<char> >, Cognit> > entry; 
 
+
 // ==============
 // Cognit methods 
 // ==============
@@ -27,6 +28,23 @@ void Cognit::increment_destination(string s) {
 		destinations[s]++; 
 }
 
+string Cognit::get_most_likely() {
+	map<string, float> temp; 
+	float highest = 0; 
+	string likely; 
+ 
+	for(map<string, int>::const_iterator it=destinations.begin(); it!=destinations.end(); ++it) {
+		temp[it->first] = it->second * (random()%100)*0.01; 
+		if(temp[it->first] > highest) {
+			highest = temp[it->first]; 
+			likely = it->first; 
+		}
+	}
+
+	return likely; 
+}
+
+
 // ==============
 // Neuron methods 
 // ==============
@@ -36,9 +54,9 @@ void Neuron::connect(Neuron n) {
 
 void Neuron::show_connections() {
 	cout << "neuron " << id << " connections. " << endl << "\t"; 
-	for(int i=0; i<axon.size(); i++) {
+	for(int i=0; i<axon.size(); i++) 
 		cout << axon[i].id << ", "; 
-	}
+	
 	cout << endl; 
 }
 
@@ -93,20 +111,7 @@ void Neuron::send(string cognit_trail, float output) {
 	// corresponds to the amount of times 
 	// this neuron has communicated with that neuron
 	// (in the inner map key) given the cognit_trail. 
-	// 
-	// thus, we'll implement the following algo: 
-
-	// find cognit_trail in cognits 
-	// if found: 
-	// 		create temp map that maps output neurons to 1 
-	// 		if that neuron is also found in cognits[cognit_trail], 
-	//  	add that value to temp map at that neuron 
-	// 		multiply each count in temp by a random factor 
-	// 		pick highest 
-	// 		send message to that neuron and cognits[cognit_trail][neuron]++
-	// 	
-	// 	cognit_trail to cognits with empty map as value 
-
+	
 	stringstream ss; 
 	ss << id; 
 	string cognit_step = ss.str(); 
@@ -114,27 +119,23 @@ void Neuron::send(string cognit_trail, float output) {
 	if(!cognits.count(cognit_trail)) 
 		add_cognit(cognit_trail); 
 	
-	map<string, float> temp; 
+	entry search = cognits.find(cognit_trail); 
+	string highest; 
+	if(search!=cognits.end())
+		highest = ((Cognit) search->second).get_most_likely(); 
+	else return; 
 
-
-
-	// stringstream ss; 
-	// ss << id; 
-	// string cognit_step = ss.str(); 
-	// if(cognits.count(cognit_trail)) {
-	// 	// insert trail in cognits 
-	// 	map<string, float> temp; 
-	// 	map<string,float>::const_iterator p; 
-	// 	for(p = cognits[cognit_trail].begin(); p!=cognits[cognit_trail].end(); ++p) {
-	// 		// temp.insert(outpair(p->))
-	// 		temp.insert(outpair(p->second, cognits[cognit_trail][p->second]*random())); 
-	// 	}
-	// } 
-
-	// pick pseudo random 
-
-	// add_cognit(cognit_trail, cognit_step, 1); 
+	for(vector<Neuron>::iterator i=axon.begin(); i!=axon.end(); ++i) {
+		stringstream ns; 
+		ns << ((Neuron) *i).id; 
+		if(ns.str()==highest) {
+			ss << ns.str(); 
+			((Neuron) *i).process(ss.str(), output); 
+			break; 
+		}
+	}
 }
+
 
 // =============
 // Organ methods
