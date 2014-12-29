@@ -60,7 +60,6 @@ class Neuron {
 
 		void connect(Neuron n); 
 		void show_connections(); 
-		// void add_cognit(string in, string out, int value);
 		void add_cognit(string in); 
 		void update_cognit(string in, string out, int value); 
 		void process(string cognit_trail, float input);  

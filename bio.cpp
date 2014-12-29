@@ -43,8 +43,21 @@ void Neuron::show_connections() {
 }
 
 void Neuron::add_cognit(string in) {
+	cout << "adding cognit " << in << "\n"; 
+
 	if(!cognits.count(in)) {
 		Cognit c(in); 
+
+		// adding neurons in axon to possible cognit routes 
+		// from the get-go. this model assumes no "physical" learning: 
+		// meaning that the neural connections will not change. 
+		for(vector<Neuron>::iterator i=axon.begin(); i!=axon.end(); ++i) {
+			stringstream ss; 
+			ss << ((Neuron) *i).id; 
+			c.add_destination(ss.str(), 1); 
+		}
+
+
 		cognits.insert(outpair(in, c)); 
 	} 
 }
@@ -65,7 +78,7 @@ void Neuron::process(string cognit_trail, float input) {
 		subtotal += input*weight; 
 
 		while(subtotal>threshold) {
-			output = ((random()%3)+6)/10; // [0.6,0.8] 
+			output = ((random()%3)+6)*0.1; // [0.6,0.8] 
 			subtotal -= threshold; 
 			send(cognit_trail, output); 
 		}
@@ -98,10 +111,11 @@ void Neuron::send(string cognit_trail, float output) {
 	ss << id; 
 	string cognit_step = ss.str(); 
 
-	if(cognits.count(cognit_trail)) {
-
+	if(!cognits.count(cognit_trail)) 
 		add_cognit(cognit_trail); 
-	}
+	
+	map<string, float> temp; 
+
 
 
 	// stringstream ss; 
