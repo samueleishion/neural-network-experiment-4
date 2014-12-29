@@ -42,15 +42,20 @@ void Neuron::show_connections() {
 	cout << endl; 
 }
 
-void Neuron::add_cognit(string in, string out, int value) {
+void Neuron::add_cognit(string in) {
 	if(!cognits.count(in)) {
 		Cognit c(in); 
-		c.add_destination(out, value); 
 		cognits.insert(outpair(in, c)); 
-	} else {
-		entry search = cognits.find(in); 
-		((Cognit) search->second).increment_destination(out); 
 	} 
+}
+
+void Neuron::update_cognit(string in, string out, int value) {
+	if(!cognits.count(in)) 
+		add_cognit(in); 
+
+	entry search = cognits.find(in); 
+	if(search!=cognits.end()) 
+		((Cognit) search->second).increment_destination(out); 
 }
 
 void Neuron::process(string cognit_trail, float input) { 
@@ -68,17 +73,53 @@ void Neuron::process(string cognit_trail, float input) {
 }
 
 void Neuron::send(string cognit_trail, float output) {
+	// cognits contains a map which keys are
+	// a string corresponding to the cognit_trail 
+	// and a value which is another map with keys 
+	// output neuron and as value an int that 
+	// corresponds to the amount of times 
+	// this neuron has communicated with that neuron
+	// (in the inner map key) given the cognit_trail. 
+	// 
+	// thus, we'll implement the following algo: 
+
+	// find cognit_trail in cognits 
+	// if found: 
+	// 		create temp map that maps output neurons to 1 
+	// 		if that neuron is also found in cognits[cognit_trail], 
+	//  	add that value to temp map at that neuron 
+	// 		multiply each count in temp by a random factor 
+	// 		pick highest 
+	// 		send message to that neuron and cognits[cognit_trail][neuron]++
+	// 	
+	// 	cognit_trail to cognits with empty map as value 
+
 	stringstream ss; 
 	ss << id; 
 	string cognit_step = ss.str(); 
-	if(cognits.count(cognit_trail)) {
-		// insert trail in cognits 
 
-	} 
+	if(cognits.count(cognit_trail)) {
+
+		add_cognit(cognit_trail); 
+	}
+
+
+	// stringstream ss; 
+	// ss << id; 
+	// string cognit_step = ss.str(); 
+	// if(cognits.count(cognit_trail)) {
+	// 	// insert trail in cognits 
+	// 	map<string, float> temp; 
+	// 	map<string,float>::const_iterator p; 
+	// 	for(p = cognits[cognit_trail].begin(); p!=cognits[cognit_trail].end(); ++p) {
+	// 		// temp.insert(outpair(p->))
+	// 		temp.insert(outpair(p->second, cognits[cognit_trail][p->second]*random())); 
+	// 	}
+	// } 
 
 	// pick pseudo random 
 
-	add_cognit(cognit_trail, cognit_step, 1); 
+	// add_cognit(cognit_trail, cognit_step, 1); 
 }
 
 // =============

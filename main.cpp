@@ -39,8 +39,12 @@ int main() {
 
 	o.connect(p); 
 
-	a.add_cognit("asdf","3",1); 
-	a.add_cognit("asdf","3",1); 
+	a.add_cognit("asdf"); 
+	a.update_cognit("asdf","3",1); 
+	a.add_cognit("asdf"); 
+	a.update_cognit("asdf","3",1); 
+	// a.add_cognit("asdf","3",1); 
+	// a.add_cognit("asdf","3",1); 
 
 	cout << "hello brain with " << n.organ_count() << " organs!" << endl; 
 	cout << "  " << o.name << " has " << o.neuron_count() << " neurons." << endl; 
